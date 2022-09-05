@@ -33,22 +33,26 @@ class HBNBCommand(cmd.Cmd):
         return False
 
     def do_EOF(self, line):
-        """Handles End Of File character."""
+        """EOF signal to exit the program."""
         return True
 
     def do_quit(self, line):
-        """Exits the program."""
+        """Quit command to exit the program."""
         return True
 
     def precmd(self, line: str) -> str:
         """Used this function to handle precommand"""
 
+        if line.startswith('"') or line.startswith("'"):
+            line = line[1:]
+        if line.endswith('"') or line.endswith("'"):
+            line = line[:-1]
         line = " ".join(line.split())
         match = re.search(r"^(\w*)\.(\w+)(?:\(([^)]*)\))$", line)
         if not match:
             return line
         classname = match.group(1)
-        method = match.group(2)
+        method = match.group(2).replace("'", "")
         args = match.group(3)
         line = " ".join([method, classname, args])
         return super().precmd(line)
@@ -65,9 +69,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
 
     def do_show(self, line):
-        """Prints the string representation
-        of an instance based on the class name and id.
-        """
+        """Prints the string representation of an instance"""
         line = parse(line)
         if HBNBCommand.error_handler(line, command="Show"):
             obj = storage.all().get(f"{line[0]}.{line[1]}")
@@ -121,7 +123,8 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
             else:
-                line[3] = eval(line[3]) if line[3].isdigit() else line[3]
+                line[3] = eval(line[3]) if line[3].isdigit()\
+                        or "." in line[3] else line[3]
                 if storage.all().get(f"{key}"):
                     obj_to_update = storage.all()[f"{key}"]
                     setattr(obj_to_update, line[2], line[3])
