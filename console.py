@@ -62,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
         (to the JSON file) and prints the id.
         """
 
-        line = parse(line)
+        line = self.parse(line)
         if HBNBCommand.error_handler(line, command="Create"):
             obj = eval(line[0])()
             obj.save()
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """Prints the string representation of an instance"""
-        line = parse(line)
+        line = self.parse(line)
         if HBNBCommand.error_handler(line, command="Show"):
             obj = storage.all().get(f"{line[0]}.{line[1]}")
             print(obj if obj else "** no instance found **")
@@ -80,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         name and id (save the change into the JSON file)
         """
 
-        line = parse(line)
+        line = self.parse(line)
         if HBNBCommand.error_handler(line, command="Destroy"):
             if storage.all().get(f"{line[0]}.{line[1]}"):
                 del storage.all()[f"{line[0]}.{line[1]}"]
@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         update_dict = re.search(r"{[^\}]*}", line)
         if update_dict:
             update_dict = eval(update_dict.group(0))
-        line = parse(line)
+        line = self.parse(line)
 
         if HBNBCommand.error_handler(line, command="Update"):
             key = f"{line[0]}.{line[1]}"
@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, line):
         """Prints out the total number of instance(in a class if specified)"""
 
-        line = parse(line)
+        line = self.parse(line)
         if HBNBCommand.error_handler(line, command="Count"):
             print(
                 len(
@@ -169,11 +169,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             return False
 
-
-def parse(line):
-    """splits commands"""
-    line = line.replace("'", " ").replace('"', " ").replace(",", " ")
-    return line.split()
+    def parse(self, line):
+        """splits commands"""
+        line = line.replace("'", " ").replace('"', " ").replace(",", " ")
+        return line.split()
 
 
 if __name__ == "__main__":
