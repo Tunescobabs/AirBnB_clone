@@ -34,8 +34,8 @@ class BaseModel:
     def save(self):
         """Updates the updated_at attribute
         with the current datetime."""
-        models.storage.save()
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def __str__(self):
         """Returns a human-readable string representation
