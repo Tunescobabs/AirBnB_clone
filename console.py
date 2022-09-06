@@ -19,14 +19,14 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
     model_list = [
-        "BaseModel",
-        "User",
-        "Place",
-        "State",
-        "City",
-        "Amenity",
-        "Review"
-        ]
+            "BaseModel",
+            "User",
+            "Place",
+            "State",
+            "City",
+            "Amenity",
+            "Review"
+            ]
 
     def emptyline(self) -> bool:
         """empty line does nothing"""
