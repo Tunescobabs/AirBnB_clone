@@ -13,7 +13,7 @@ The AirbnB clone is a **web application project** that consists of four(4) diffe
 ## The Console
 This part of the project is to create a *console (a command interpreter)* that uses
 file storage system to manipulate data
-The goal of the *console* part fo the project is to:
+The goal of the *console* part for the project is to:
 - create a data model
 - manage (create, update, destroy, etc) objects via a console / command interpreter
 - store and persist objects to a file (JSON file)
