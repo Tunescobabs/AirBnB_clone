@@ -1,6 +1,5 @@
 # HBnB - Holberton School AirBnB clone
 
-
 <p align="center">
     <img src="https://i.imgur.com/JOhaZ5m.png">
 </p>
